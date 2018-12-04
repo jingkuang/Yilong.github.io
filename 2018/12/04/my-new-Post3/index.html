@@ -10,7 +10,7 @@
 		
 
 <head><meta name="generator" content="Hexo 3.8.0">
-	<title>my new Post</title>
+	<title>如何安装Apache</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="apple-mobile-web-app-title" content="Amaze UI">
@@ -54,7 +54,7 @@
 		
 		
 			
-			<p class="page-name">当前文章&nbsp;:&nbsp;《my new Post》</p>
+			<p class="page-name">当前文章&nbsp;:&nbsp;《如何安装Apache》</p>
 			
 		
 	
@@ -160,8 +160,8 @@
 					
 					
 	
-		<a href="/2018/12/03/my-new-Post3/" itemprop="url">		
-			my new Post		
+		<a href="/2018/12/04/my-new-Post3/" itemprop="url">		
+			如何安装Apache		
 		</a>
 	
 
@@ -170,9 +170,9 @@
 				<p class="am-article-meta blog-text-center">
 					<span>
 						<i class="fa fa-clock-o"></i> 
-						<a href="/2018/12/03/my-new-Post3/" itemprop="url">
-	<time datetime="2018-12-03T06:50:44.000Z" itemprop="datePublished">
-  		2018-12-03
+						<a href="/2018/12/04/my-new-Post3/" itemprop="url">
+	<time datetime="2018-12-03T16:00:00.000Z" itemprop="datePublished">
+  		2018-12-04
   </time>
 </a>    
 &nbsp;
@@ -187,7 +187,19 @@
 			<div class="am-article-bd">
 				<div class="content" id="post-content">
 					
-						<p>这是我的第一篇帖子</p>
+						<h1 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h1><p>  1.将httpd-2.4.37文件放到/root（我是通过Cyberduck上传文件）<br><img src="/Apache/1.png" alt="1"><br><img src="/Apache/2.png" alt="2"><br>  2.解压httpd-2.4.37.tar.gz<br>      tar -xzvf httpd-2.4.37.tar.gz<br><img src="/Apache/3.png" alt="3"></p>
+<h2 id="开始正式安装"><a href="#开始正式安装" class="headerlink" title="开始正式安装"></a>开始正式安装</h2><p>  1.进入httpd-2.4.37文件夹cd httpd-2.4.37<br><img src="/Apache/4.png" alt="4"><br>  2.安装前看INSTALL或者README，可以看到安装步骤<br><img src="/Apache/6.png" alt="6"></p>
+<p><strong>建议可以用终端重新创建一个命令行端口</strong><br><img src="/Apache/5.png" alt="5"></p>
+<p>  3.按照步骤执行命令<br>使用命令：./configure –prefix=/usr/local/apache2。这时会出现错误</p>
+<p><strong>error:APR not found:（错误：没有APR）</strong><br><img src="/Apache/7.png" alt="7"></p>
+<p>  4.查看APR所需的文件：yum search APR<br><img src="/Apache/9.png" alt="9"><br>使用yum install apr-devel apr-util apr -y 下载<br>  5.再次使用./configure –prefix=/usr/local/apache2 再次出现错误 error: APR-util not found<br><img src="/Apache/10.png" alt="10"><br>  6.下载所缺失的程序<br>    继续使用yum search APR-util<br><img src="/Apache/11.png" alt="11"><br>    找到缺失文件使用yum install apr-util apr-util-devel -y<br>    继续使用./configure –prefix=/usr/local/apache2命令会发现出现错误</p>
+<p><strong>error:in “/root/httpd-2.4.37”        error:C compiler cannot create executables这是提醒我们需要安装开发者工具集，使用<br>yum groupinstall “development tools” -y</strong></p>
+<p>   7.继续使用安装命令./configure –prefix=/usr/local/apache2再次出现错误：error: pcre-config for libpcre not found.<br><img src="/Apache/13.png" alt="13"><br>   8.重复yum命令yum search pcre<br><img src="/Apache/14.png" alt="14"><br>   继续使用yum install pcre-devel pcre -y<br>   9.再次执行./configure –prefix=/usr/local/apache2<br><img src="/Apache/15.png" alt="15"><br>   10.执行成功</p>
+<h3 id="安装成功"><a href="#安装成功" class="headerlink" title="安装成功"></a>安装成功</h3><p>这时，我们已经执行成功了，但是还没有安装所以我们需要进行安装。使用命令make &amp;&amp; make install<br>完成安装</p>
+<h4 id="如何运行Apache程序"><a href="#如何运行Apache程序" class="headerlink" title="如何运行Apache程序"></a>如何运行Apache程序</h4><p>使用命令</p>
+<p>/usr/local/apache2/bin/apachectl start</p>
+<p><img src="/Apache/16.png" alt="16"></p>
+<p><strong>上图中所出现的文字并不会影响程序的运行。可以正常使用静态网页</strong></p>
 
 					
 				</div>
@@ -196,15 +208,9 @@
 
 		<ul class="am-pagination">
     
-    	<li class="am-pagination-prev">
-   		<a class="pull-left" href="/2018/12/03/my-new-Post/" title="my new Post">
-      		&laquo; 上一篇
-		</a>
-		</li>
-	
 	
 		<li class="am-pagination-next">
-		<a class="pull-right" href="/2018/12/03/hello-world/" title="Hello World">
+		<a class="pull-right" href="/2018/12/03/my-new-Post1/" title="WIndows系统如何制作博客">
 			下一篇 &raquo;
 		</a>
 		</li>
@@ -288,6 +294,18 @@
 	描述：The TOC module refers to 'https://github.com/codefine/hexo-theme-mellow', include toc.ejs、toc.js、toc.css. All rights reserved by codefine. 
 -->
 
+	
+		<aside class="post-widget">
+			<nav class="post-toc-wrap" id="post-toc">
+				
+					<strong>文章目录</strong>
+				
+				
+				<!--toc(post.content)-->
+				<ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装前准备"><span class="post-toc-text">安装前准备</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开始正式安装"><span class="post-toc-text">开始正式安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#安装成功"><span class="post-toc-text">安装成功</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#如何运行Apache程序"><span class="post-toc-text">如何运行Apache程序</span></a></li></ol></li></ol></li></ol></li></ol>
+			</nav>
+			<div class="post-toc-bar"><div>
+		</div></div></aside>
 	
 
 	</div>
