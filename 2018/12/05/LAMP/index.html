@@ -10,7 +10,7 @@
 		
 
 <head><meta name="generator" content="Hexo 3.8.0">
-	<title>博客如何更换主题</title>
+	<title>如何安装LAMP</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="apple-mobile-web-app-title" content="Amaze UI">
@@ -54,7 +54,7 @@
 		
 		
 			
-			<p class="page-name">当前文章&nbsp;:&nbsp;《博客如何更换主题》</p>
+			<p class="page-name">当前文章&nbsp;:&nbsp;《如何安装LAMP》</p>
 			
 		
 	
@@ -160,8 +160,8 @@
 					
 					
 	
-		<a href="/2018/12/03/my-new-Post2/" itemprop="url">		
-			博客如何更换主题		
+		<a href="/2018/12/05/LAMP/" itemprop="url">		
+			如何安装LAMP		
 		</a>
 	
 
@@ -170,9 +170,9 @@
 				<p class="am-article-meta blog-text-center">
 					<span>
 						<i class="fa fa-clock-o"></i> 
-						<a href="/2018/12/03/my-new-Post2/" itemprop="url">
-	<time datetime="2018-12-03T12:00:00.000Z" itemprop="datePublished">
-  		2018-12-03
+						<a href="/2018/12/05/LAMP/" itemprop="url">
+	<time datetime="2018-12-05T06:50:44.000Z" itemprop="datePublished">
+  		2018-12-05
   </time>
 </a>    
 &nbsp;
@@ -187,16 +187,14 @@
 			<div class="am-article-bd">
 				<div class="content" id="post-content">
 					
-						<h1><span id="将主题下载下来">将主题下载下来</span></h1><p>  关于下载方法：<br>  1.可以复制链接 在命令行使用git clone 链接进行下载<br>  2.手动下载</p>
-<h2><span id="将下载下来的主题放在blogthemes中">将下载下来的主题放在Blog/themes中</span></h2><p>   进入Blog/themes通过路径进入cmd命令行</p>
-<h3><span id="输入-hexo-clean-清除缓存-有兴趣的可以查看少什么文件">输入 hexo clean 清除缓存 （有兴趣的可以查看少什么文件）</span></h3><p>   hexo generate 下载缓存<br>   hexo server   重新启动</p>
-<h4><span id="主题完成后">主题完成后</span></h4><p>  将E:\Blog\public重新复制到C:\Users\DELL\Documents\GitHub\jingkuang.github.io<br>  完成上传</p>
-<h5><span id="文章需要在根据提示如hexo-new-my-new-post">文章需要在根据提示如：hexo new “my new Post”</span></h5><p>  系统给出具体位置如：E：\blog\source_postes\my-new-Post.md<br>  进入文件</p>
-<h2><span id="文件形式为">  文件形式为</span></h2><pre><code>title: my new Post
-date: 2018-12-03 14:50:44
-tags:
----
-</code></pre>
+						<p>&lt;! – toc –&gt;<br>这次我们搭建LAMP，所使用系统是复制过来Centos 6版本的虚拟机。设置桥接模式，这是我们会发现一个问题就是没有eth0网卡。所以我们首先要先解决网卡问题，不然后面打开网页或者使用YUM都无法正常使用。<br><img src="/lamp/1.jpeg" alt="1"></p>
+<h1><span id="安装前的准备">安装前的准备</span></h1><p>首先当然要先恢复网卡。我们需要先查看本地网卡里面会有eth1网卡的MAC地址，文件位置在：/etc/udev/rules.d/<br><img src="/lamp/2.jpeg" alt="2"><br><img src="/lamp/3.jpeg" alt="3"><br>我们就直接找到eth1文件里面ATTR{address}==后面就是MAC地址记一下。<br><strong>为什么会出现这种原因呢？简单来说，Centos6系统发现自己不在原来的PC上，于是又重新建立了一个新的网卡。</strong><br>记下MAC地址我们需要修改网卡配置使用命令<br>    vi /etc/sysconfig/network-scripts/ifcfg-eth0<br>将eth0修改eth1，并且将之前我们记住的MAC地址修改到HWADDR的数值里<br><img src="/lamp/4.jpeg" alt="4"><br>修改好了，我们还需要重启网卡<br>    service network<br>修改成功！<br><img src="/lamp/6.jpeg" alt="6"><br>虚拟机的问题解决，我们继续安装LAMP</p>
+<h1><span id="搭建lamp">搭建LAMP</span></h1><p>##安装Apache<br><strong>我们首先要知道LAMP是什么？LAMP就是Linux+Apache+MySQL+PHP。<br>Linux：值得一提这个系统是提供Web服务最常见的组合之一<br>Apache：是使用中最受欢迎的一个开放源码的Web服务器软件<br>MySQL：多线程、多用户的SQL数据库管理系统<br>PHP：一种变成语言最初设计生产动态网站。用于服务器端的应用程序软件</strong><br>首先我们需要先安装Apache。这里我们使用yum命令进行安装<strong>（yum命令需要在联网的情况下才能正常安装）</strong><br>    yum install httpd httpd-devel httpd-manual mod_ssl mod_perl mod_auth_mysql -y<br><img src="/lamp/7.jpeg" alt="7"><br>安装成功！<br><img src="/lamp/8.jpeg" alt="8"><br>在这个时候我们可以正常使用Apache，但是会出现其他问题是关于DNS问题。当然你也可以不用处理但是有强迫症的朋友们。我们可以修改/etc/httpd/conf/httpd.conf文件<br>    vi /etc/httpd/conf/httpd.conf<br><img src="/lamp/9.jpeg" alt="9"><br>我们在末行模式使用/exam进行查找<br><img src="/lamp/10.jpeg" alt="10"><br>将www .example .com:80前的注释符“#”删除<br><img src="/lamp/11.jpeg" alt="11"><br>然后我们就可以正常启动Apache服务<br>    service httpd status<br><img src="/lamp/12.jpeg" alt="12"><br>这时候我们就可以开启防火墙了<br>    service iptables start<br>但是正常启动的情况下我们都需要修改一下防火墙配置文件<br>    vi /etc/sysconfig/iptables<br><strong>在这里我们需要了解几个属性 -A代表追加 INPUT表示别人给你的包 ONPUT表示你给别人的包 FORWARD代表路由器</strong><br><img src="/lamp/16.jpeg" alt="16"><br>修改完成后我们需要重启防火墙<br>    service iptables restart<br><img src="/lamp/17.jpeg" alt="17"><br>这个时候我们需要将Apache设置为开机自启<br>    chkconfig httpd on<br>这时候我们就可以通过查看我们IP的网页，成功我们继续下面的步骤<br><img src="/lamp/18.jpeg" alt="18"></p>
+<p>##安装MySQL<br>我们需要先安装MySQL使用yum命令<br>    yum install mysql mysql-server mysql-devel<br><img src="/lamp/21.jpeg" alt="21"><br>安装成功后，我们启动MySQL服务<br>    service mysqld start<br><img src="/lamp/23.jpeg" alt="23"><br>由于我们第一次安装MySQL，所以我们需要初始化MySQL数据库<br>    mysql_secure_installationg<br><img src="/lamp/25.jpeg" alt="25"><br><strong>当然中间需要Y/N，我们全程回车就当Y执行即可</strong><br>完成后，由于我们开启了Apache开机自启所以我们也要把MySQL设置成开机自启<br>    chkconfig mysqld on<br>现在我们需要进入MySQL<strong>-h为本地启动，-uroot为用户-p为密码</strong><br>    mysql -h localhost -u -p<br><img src="/lamp/27.jpeg" alt="27"><br>我们需要查看一下我们MySQL有没有创建数据库<br>    show databases;<br><img src="/lamp/28.jpeg" alt="28"><br>这样我们就完成MySQL的安装！</p>
+<p>###安装PHP<br>我们还是使用yum安装PHP<br>    yum install php php-mysql php-common php-gd php-mbstring php-mcrypt php-devel php-xml<br><img src="/lamp/30.jpeg" alt="30"><br>我们就完成了所有LAMP的安装了</p>
+<p>#设置漏洞网页<br>我们为了以后的学习，需要将LAMP设置为一个漏油网页，所以我们需要重新建立新的网页<br>首先我们需要上传文件，我还是继续使用小黄鸭<br><img src="/lamp/31.jpeg" alt="31"><br>将文件上传到/var/www/html<br><img src="/lamp/32.jpeg" alt="32"><br>上传成功后，文件不能直接使用还需要修改一下<br>    vi /var/www/html/sys/config.php<br>将默认password修改为自己数据库的密码<br><img src="/lamp/34.jpeg" alt="34"><br>修改完成后，还需要重启一下Apache<br>    service htppd restart<br>重新刷新一下网页，我们就会发现网页还是无法显示<br><img src="/lamp/111.jpeg" alt="111"><br>我们需要进入MySQL，重新建立一个vauditdemo数据库<br>    create database vauditdemo;<br>建议我们再看一下数据库表<br><img src="/lamp/36.jpeg" alt="36"><br>这时候我们的网页基本完成了</p>
+<p>#完善漏洞网页<br>我们仔细查看会发现我们无法打开留言，所以我们需要将文件导入到MySQL数据库中<br>首先我们需要进入 /var/www/html/install会发现一个install.sql，在这个文件夹下进入MySQL<br>使用我们之前创建的数据库<br>    use vauditdemo;<br>将当前文件导入到数据库中<br>    source install.sql;<br><img src="/lamp/38.jpeg" alt="38"><br>这个时候我们再次刷新网页，进入留言板会发现所有问题解决了。<br><img src="/lamp/39.jpeg" alt="39"><br>至此我们所有问题都解决了！</p>
+
 					
 				</div>
 			</div>
@@ -204,15 +202,9 @@ tags:
 
 		<ul class="am-pagination">
     
-    	<li class="am-pagination-prev">
-   		<a class="pull-left" href="/2018/12/03/my-new-Post1/" title="WIndows系统如何制作博客">
-      		&laquo; 上一篇
-		</a>
-		</li>
-	
 	
 		<li class="am-pagination-next">
-		<a class="pull-right" href="/2018/12/03/my-new-Post/" title="my new Post">
+		<a class="pull-right" href="/2018/12/04/my-new-Post3/" title="如何安装Apache">
 			下一篇 &raquo;
 		</a>
 		</li>
@@ -304,7 +296,7 @@ tags:
 				
 				
 				<!--toc(post.content)-->
-				<ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">将主题下载下来</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">将下载下来的主题放在Blog/themes中</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">输入 hexo clean 清除缓存 （有兴趣的可以查看少什么文件）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">主题完成后</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">文章需要在根据提示如：hexo new “my new Post”</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">  文件形式为</span></a></li></ol></li></ol>
+				<ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">安装前的准备</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#undefined"><span class="post-toc-text">搭建LAMP</span></a></li></ol>
 			</nav>
 			<div class="post-toc-bar"><div>
 		</div></div></aside>
