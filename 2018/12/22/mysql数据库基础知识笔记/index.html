@@ -155,7 +155,7 @@ HTT,">
 <h1><span id="mysql登录和退出">MySQL登录和退出</span></h1><p>登录MySQL有两种方式，一种是通过命令行登录进行操作，一种是通过工具登录进行操作，下面介绍通过DOS命令行进行登录</p>
 <h2><span id="配置环境变量">配置环境变量</span></h2><p>如果想在任意位置登录MySQL，则需要配置环境变量，如何判断是否配置好，可通过查看MySQL版本的命令进行判断：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -V			#切记是大写的`V`</span><br></pre></td></tr></table></figure>
-<p><img src="E:\Blog\source\mysql\mysql-V01.png" alt=""></p>
+<p><img src="/mysql/mysql-V01.png" alt=""></p>
 <p>如果出现如下情况即没有配置好：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">‘mysql -V 不是内部或外部命令，也不是可运行的程序或批处理文件。</span><br></pre></td></tr></table></figure>
 <p>接下来进行配置，win7路径如下：</p>
@@ -198,13 +198,13 @@ HTT,">
 <li>数据库名：自定义</li>
 <li>CHARSET：设置数据库的默认字符集</li>
 </ul>
-<p><img src="E:\Blog\source\mysql\create_db01.png" alt=""></p>
+<p><img src="/mysql/create_db01.png" alt=""></p>
 <h2><span id="删除数据库">删除数据库</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE [IF EXISTS] 数据库名;</span><br></pre></td></tr></table></figure>
 <h2><span id="查看数据库的字符集">查看数据库的字符集</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE DATABASE 数据库名;</span><br></pre></td></tr></table></figure>
-<p><img src="E:\Blog\source\mysql\charset01.png" alt=""></p>
+<p><img src="/mysql/charset01.png" alt=""></p>
 <p>通过MySQL命令修改数据库的字符集</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE 数据库名 DEFAULT CHARACTER SET gbk;</span><br></pre></td></tr></table></figure>
-<p><img src="E:\Blog\source\mysql\charset02.png" alt=""></p>
+<p><img src="/mysql/charset02.png" alt=""></p>
 <h1><span id="mysql数据表操作">MySQL数据表操作</span></h1><h2><span id="选择数据库">选择数据库</span></h2><p>只有进入数据库里，才能操作数据表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE 数据库名;</span><br></pre></td></tr></table></figure>
 <h2><span id="显示当前库中所有的数据表">显示当前库中所有的数据表</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES;</span><br></pre></td></tr></table></figure>
@@ -223,13 +223,13 @@ HTT,">
 </li>
 </ul>
 <p>一个数据表，由多个列构成。多个列定义之间用英文下的<strong>逗号</strong>隔开。</p>
-<p><img src="E:\Blog\source\mysql\create_tb01.png" alt=""></p>
-<p><img src="E:\Blog\source\mysql\create_tb02.png" alt=""></p>
+<p><img src="/mysql/create_tb01.png" alt=""></p>
+<p><img src="/mysql/create_tb02.png" alt=""></p>
 <h2><span id="删除数据表">删除数据表</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE [IF EXISTS] table_name;</span><br></pre></td></tr></table></figure>
-<h2><span id="修改数据表">修改数据表</span></h2><p><img src="E:\Blog\source\mysql\alter_tb01.png" alt=""></p>
+<h2><span id="修改数据表">修改数据表</span></h2><p><img src="/mysql/alter_tb01.png" alt=""></p>
 <p>这么麻烦的语句，你要用吗？删了在创建一个不就完事儿了</p>
 <h2><span id="describe显示表的结构定义">describe显示表的结构定义</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESCRIBE 表名;	或		DESC 表名;</span><br></pre></td></tr></table></figure>
-<p><img src="E:\Blog\source\mysql\desc01.png" alt=""></p>
+<p><img src="/mysql/desc01.png" alt=""></p>
 <h1><span id="sql基础">SQL基础</span></h1><h2><span id="增删改查">增删改查</span></h2><h3><span id="增加记录">增加记录</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO 表名(字段1,字段2,字段3,…) VALUES (值1,值2,值3,…)</span><br></pre></td></tr></table></figure>
 <h3><span id="删除记录">删除记录</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM 表名 [WHERE 条件]</span><br></pre></td></tr></table></figure>
 <p><strong>WHERE条件：如果省略，将删除所有记录</strong></p>
@@ -249,7 +249,7 @@ HTT,">
 <li>ORDER BY：字段排序</li>
 <li>LIMIT：限制输出</li>
 </ul>
-<h2><span id="条件判断">条件判断</span></h2><h3><span id="where">WHERE</span></h3><p><img src="E:\Blog\source\mysql\where01.png" alt=""></p>
+<h2><span id="条件判断">条件判断</span></h2><h3><span id="where">WHERE</span></h3><p><img src="/mysql/where01.png" alt=""></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM news WHERE id&lt;100;</span><br><span class="line">SELECT * FROM news WHERE id&lt;100 and hits&lt;100;</span><br><span class="line">SELECT * FROM news WHERE id=100 OR hits&lt;50;</span><br></pre></td></tr></table></figure>
 <h3><span id="order-by">ORDER BY</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">order by n		如果后面跟数字，是按照第n列数据排序，如果n超过字段数，就报错</span><br><span class="line"></span><br><span class="line">ERROR 1054 (42S22): Unknown column &apos;5&apos; in &apos;order clause&apos;</span><br></pre></td></tr></table></figure>
 <p><strong>由此可判断此表有几列</strong></p>

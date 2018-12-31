@@ -99,20 +99,20 @@ HTT,">
 <p>TCP：Transmission Control Protocol 传输控制协议<br>IP： Internet Protocol 互联网协议</p>
 <p>该协议是目前世界上应用最为广泛的协议，是以TCP和IP为基础的不同层次上多个协议的集合，两台主机要实现通讯，都必须遵守TCP/IP协议。</p>
 <p>以下是ISO/OSI七层模型与TCP/IP四层模型对比：</p>
-<p><img src="E:\Blog\source\http\图片1.png" alt=""></p>
+<p><img src="/http/图片1.png" alt=""></p>
 <p>区别：</p>
 <p>1、前者是七层模型结构，后者是四层模型结构；</p>
 <p>2、实际市场应用不同， ISO/OSI参考模型只是理论上的模型，并没有成熟的产品支持；而TCP/IP参考模型已经成为“实际上的国际标准”。</p>
 <p>五层协议与四层协议基本相同，只不过是将网络接口层分开为物理层和数据链路层。</p>
 <h2><span id="二-tcp三次握手和四次挥手">二、TCP三次握手和四次挥手</span></h2><h3><span id="三次握手">三次握手</span></h3><p>首先看一张图片</p>
-<p><img src="E:\Blog\source\http\图片2.gif" alt=""></p>
+<p><img src="/http/图片2.gif" alt=""></p>
 <p>在学习TCP协议的“三次握手”之前，先来了解TCP报文及格式：当应用层向TCP层发送用于网间传输的、用8位字节表示的数据流时，TCP会把数据流分割成适当长度的报文段，之后TCP把数据包传给IP层，由它来通过网络将包传送给接收端实体的TCP层。</p>
 <h4><span id="三次握手流程">三次握手流程</span></h4><p>1.第一次握手：主机A将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给主机B，主机A进入SYN_SENT状态，等待主机B确认。</p>
 <ol start="2">
 <li>第二次握手：主机B收到数据包后由标志位SYN=1得知主机A请求建立连接，主机B将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给主机A以确认连接请求，主机B进入SYN_RCVD状态。</li>
 </ol>
 <p>3.第三次握手：主机A收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给主机B，主机B检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，主机A和主机B进入ESTABLISHED状态，完成三次握手，随后就可以开始传输数据了</p>
-<h3><span id="四次挥手">四次挥手</span></h3><p><img src="E:\Blog\source\http\图片3.gif" alt=""></p>
+<h3><span id="四次挥手">四次挥手</span></h3><p><img src="/http/图片3.gif" alt=""></p>
 <p>在了解4次挥手之前我们要知道为什么建立连接时是3次，而关闭时却是4次呢？</p>
 <p>这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的连接请求后，它可以把ACK和SYN(ACK起应答作用，而SYN起同步作用)放在 一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可能 未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报 文和FIN报文多数情况下都是分开发送的。 </p>
 <p>（1）第一次挥手：客户端发送一个FIN，用来关闭客户端到服务器的数据传送，客户端进入FIN 1状态。         </p>
@@ -150,16 +150,16 @@ HTT,">
 <p>| 200  | OK                    | 请求成功。一般用于GET与POST请求                              |<br>| —- | ——————— | ———————————————————— |<br>| 400  | Bad Request           | 客户端请求的语法错误，服务器无法理解                         |<br>| 403  | Forbidden             | 服务器理解请求客户端的请求，但是拒绝执行此请求               |<br>| 404  | Not Found             | 服务器无法根据客户端的请求找到资源（网页）。通过此代码，网站设计人员可设置”您所请求的资源无法找到”的个性页面 |<br>| 405  | Method Not Allowed    | 客户端请求中的方法被禁止                                     |<br>| 500  | Internal Server Error | 服务器内部错误，无法完成请求                                 |<br>| 502  | Bad Gateway           | 作为网关或者代理工作的服务器尝试执行请求时，从远程服务器接收到了一个无效的响应 |</p>
 </li>
 </ul>
-<h3><span id="http之url">HTTP之URL</span></h3><p><img src="E:\Blog\source\http\图片4.png" alt=""></p>
-<h3><span id="http之请求消息request">HTTP之请求消息Request</span></h3><p><img src="E:\Blog\source\http\图片5.png" alt=""></p>
+<h3><span id="http之url">HTTP之URL</span></h3><p><img src="/http/图片4.png" alt=""></p>
+<h3><span id="http之请求消息request">HTTP之请求消息Request</span></h3><p><img src="/http/图片5.png" alt=""></p>
 <p>举例：</p>
 <p>GET / HTTP/1.1</p>
 <p>Host: 192.168.11.111:8000</p>
 <p>Accept: <em>/</em></p>
 <p>//换行</p>
 <h3><span id="http请求方法">HTTP请求方法</span></h3><p>主要是GET和POST请求</p>
-<h5><span id="get请求举例">GET请求举例</span></h5><p><img src="E:\Blog\source\http\图片6.png" alt=""></p>
-<h5><span id="post请求举例">POST请求举例</span></h5><p><img src="E:\Blog\source\http\图片7.png" alt=""></p>
+<h5><span id="get请求举例">GET请求举例</span></h5><p><img src="/http/图片6.png" alt=""></p>
+<h5><span id="post请求举例">POST请求举例</span></h5><p><img src="/http/图片7.png" alt=""></p>
 <h3><span id="http请求头和响应头">HTTP请求头和响应头</span></h3><p>请求头：</p>
 <p>User-Agent ；浏览器的标识信息</p>
 <p>Accept 发送的数据类型（一般有text，json,xml）</p>
