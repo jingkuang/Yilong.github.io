@@ -37,7 +37,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">Hello World</h3>
+    <h3 class="subtitle">关于SQL注入的基础教程</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -54,22 +54,31 @@
     <div class="section">
         <div class="article">
     <div class="main">
-        <h1 class="title">Hello World</h1>
+        <h1 class="title">关于SQL注入的基础教程</h1>
         <div class="stuff">
-            <span>十二月 03, 2018</span>
+            <span>一月 01, 2019</span>
             
 
         </div>
         <div class="content markdown">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2><span id="quick-start">Quick Start</span></h2><h3><span id="create-a-new-post">Create a new post</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3><span id="run-server">Run server</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3><span id="generate-static-files">Generate static files</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3><span id="deploy-to-remote-sites">Deploy to remote sites</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <!-- toc -->
+<ul>
+<li><a href="#网站的选择">网站的选择</a><ul>
+<li><a href="#注入点">注入点</a></li>
+<li><a href="#注入加入成功">注入加入成功</a></li>
+<li><a href="#查看库-表-信息">查看库、表、信息</a></li>
+<li><a href="#关于盲注">关于盲注</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+<h1><span id="网站的选择">网站的选择</span></h1><p>我们在选择网站一定是要选择可以注入的网站，但是如何区分这个网站是否可以注入我们需要2个条件<br>1.用户是能够控制输入的内容<br>2.Web应用把用户输入的内容带入到数据库<br>在这种情况下，我们才可以确定使用确定SQL是否可以注入</p>
+<h2><span id="注入点">注入点</span></h2><p>我们使用？id=1作为开始，我们需要使用一个个进行排除</p>
+<p><img src="/SQL/1.png" alt=""></p>
+<p>可以按照这个图片我们进行注入即可</p>
+<h2><span id="注入加入成功">注入加入成功</span></h2><p>注入点加入成功后，我们需要查看版本信号等等。这时候我们需要使用order by  1,2,3,4,5…进行查看</p>
+<h2><span id="查看库-表-信息">查看库、表、信息</span></h2><p>查询数据库中有那些库<br>    select schema_name from information_schema.SCHEMATA<br>查询数据库中有那些表<br>    select table_name from information_schema.TABLES<br>查询数据库中test库中有哪些表<br>    select table_name from information_schema.TABLES where table_schema = ‘test’  // test 可以写成 0x7a73<br>查询数据库中有那些字段<br>    select column_name from information_schema.COLUMNS<br>查询数据库中test库中user表有哪些字段<br>    select column_name from information_schema.COLUMNS where table_schema = ‘test’ and table_name = ‘user’</p>
+<h2><span id="关于盲注">关于盲注</span></h2><p>在关于盲注时，需要猜测。使用二分法。但是使用二分法<br>需要使用ascii（）使用转换，但是只能转一位<br>ASCII码：<a href="http://ascii.911cha.com/" target="_blank" rel="noopener">http://ascii.911cha.com/</a></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
@@ -92,7 +101,7 @@
     </div>
     
         <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">网站的选择</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">注入点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">注入加入成功</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">查看库、表、信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">关于盲注</span></a></li></ol></li></ol>
         </div>
     
 </div>
