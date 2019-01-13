@@ -28,7 +28,7 @@ nginxnginx 1.6.21http://www.test.com/1.txt/hack.php
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">如何安装Apache</h3>
+    <h3 class="subtitle">文件上传漏洞绕过</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -45,40 +45,36 @@ nginxnginx 1.6.21http://www.test.com/1.txt/hack.php
     <div class="section">
         <div class="article">
     <div class="main">
-        <h1 class="title">如何安装Apache</h1>
+        <h1 class="title">文件上传漏洞绕过</h1>
         <div class="stuff">
-            <span>十二月 04, 2018</span>
+            <span>一月 12, 2019</span>
             
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/文件上传概要/">文件上传概要</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            <!-- toc -->
-<ul>
-<li><a href="#安装前准备">安装前准备</a><ul>
-<li><a href="#开始正式安装">开始正式安装</a><ul>
-<li><a href="#安装成功">安装成功</a><ul>
-<li><a href="#如何运行apache程序">如何运行Apache程序</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-<h1><span id="安装前准备">安装前准备</span></h1><p>  <em>下载安装SSH（我使用的Termius，就按照Termius讲解）<br>  将虚拟机地址和账号密码输入到Edit Host 点击右上角SAVE保存即可<br>  进入Termius，开始使用</em><br><img src="/Apache/17.png" alt="17"><br>  1.将httpd-2.4.37文件放到/root（我是通过Cyberduck上传文件）<br><img src="/Apache/1.png" alt="1"><br><img src="/Apache/2.png" alt="2"><br>  2.解压httpd-2.4.37.tar.gz: tar -xzvf httpd-2.4.37.tar.gz<br><img src="/Apache/3.png" alt="3"></p>
-<h2><span id="开始正式安装">开始正式安装</span></h2><p>  1.进入httpd-2.4.37文件夹cd httpd-2.4.37<br><img src="/Apache/4.png" alt="4"><br>  2.安装前看INSTALL或者README，可以看到安装步骤<br><img src="/Apache/6.png" alt="6"></p>
-<p><strong>建议可以用终端重新创建一个命令行端口</strong><br><img src="/Apache/5.png" alt="5"></p>
-<p>  3.按照步骤执行命令<br>使用命令：./configure –prefix=/usr/local/apache2。这时会出现错误</p>
-<p><strong>error:APR not found:（错误：没有APR）</strong><br><img src="/Apache/7.png" alt="7"></p>
-<p>  4.查看APR所需的文件：yum search APR<br><img src="/Apache/9.png" alt="9"><br>使用yum install apr-devel apr-util apr -y 下载<br>  5.再次使用./configure –prefix=/usr/local/apache2 再次出现错误 error: APR-util not found<br><img src="/Apache/10.png" alt="10"><br>  6.下载所缺失的程序<br>    继续使用yum search APR-util<br><img src="/Apache/11.png" alt="11"><br>    找到缺失文件使用yum install apr-util apr-util-devel -y<br>    继续使用./configure –prefix=/usr/local/apache2命令会发现出现错误</p>
-<p><strong>error:in “/root/httpd-2.4.37”        error:C compiler cannot create executables这是提醒我们需要安装开发者工具集，使用<br>yum groupinstall “development tools” -y</strong></p>
-<p>   7.继续使用安装命令./configure –prefix=/usr/local/apache2再次出现错误：error: pcre-config for libpcre not found.<br><img src="/Apache/13.png" alt="13"><br>   8.重复yum命令yum search pcre<br><img src="/Apache/14.png" alt="14"><br>   继续使用yum install pcre-devel pcre -y<br>   9.再次执行./configure –prefix=/usr/local/apache2<br><img src="/Apache/15.png" alt="15"><br>   10.执行成功</p>
-<h3><span id="安装成功">安装成功</span></h3><p>这时，我们已经执行成功了，但是还没有安装所以我们需要进行安装。<br>使用命令make &amp;&amp; make install<br>完成安装</p>
-<h4><span id="如何运行apache程序">如何运行Apache程序</span></h4><p>使用命令</p>
-<p>/usr/local/apache2/bin/apachectl start</p>
-<p><img src="/Apache/16.png" alt="16"></p>
-<p><strong>上图中所出现的文字并不会影响程序的运行。可以正常使用静态网页</strong></p>
+            <h1><span id="前言">前言</span></h1><p>这里有一个集合了好多解析漏洞的地方：<a href="https://github.com/clancyb00m/vulhub" target="_blank" rel="noopener">vulhub-github</a>，但其实它是一个漏洞靶场</p>
+<h1><span id="nginx">nginx</span></h1><h2><span id="nginx-162">nginx 1.6.2</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.test.com/1.txt/hack.php</span><br></pre></td></tr></table></figure>
+<p>如果<code>hack.php</code>不存在，就会以<code>.php</code>后缀去执行<code>1.txt</code>，所以最后执行的其实是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.test.com/1.php</span><br></pre></td></tr></table></figure>
+<h2><span id="nginx-1x-php-7x">nginx 1.x + php 7.x</span></h2><p>该漏洞属于用户配置不当造成的解析漏洞</p>
+<p>假设你上传了一个图片马，地址为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.test.com/1.png</span><br></pre></td></tr></table></figure>
+<p>那么漏洞地址就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.test.com/1.png/.php</span><br></pre></td></tr></table></figure>
+<h1><span id="apache">apache</span></h1><h2><span id="apache-22x">apache 2.2.x</span></h2><p>我不太懂，这里有文档：<a href="https://github.com/clancyb00m/vulhub/tree/master/httpd/apache_parsing_vulnerability" target="_blank" rel="noopener">Apache HTTPD 多后缀解析漏洞</a></p>
+<p>如果运维人员给<code>.php</code>后缀增加了处理器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php</span><br></pre></td></tr></table></figure>
+<p>上传<code>1.php.haha</code>的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.test.com/1.php.haha</span><br></pre></td></tr></table></figure>
+<p><code>haha</code>后缀不存在，Apache会左移寻找能解析的后缀，所以最后会解析1.php的内容</p>
+<h2><span id="apache-240~2429">apache 2.4.0~2.4.29</span></h2><p><strong>CVE-2017-15715</strong></p>
+<p>直接上传一个<code>1.php</code>文件，然后抓包在后缀名后添加<code>\x0a</code>，然后访问如下网址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.test.com/1.php\x0a</span><br></pre></td></tr></table></figure>
+<h1><span id="iis">IIS</span></h1><h2><span id="iis-6">IIS 6</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.test.com/1.asp.jpg</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.test.com/1.asp/1.jpg</span><br></pre></td></tr></table></figure>
+<h2><span id="iis-75">IIS 7.5</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.jpg是一个图片马，1.php不存在</span><br><span class="line">www.test.com/a.jpg/1.php</span><br></pre></td></tr></table></figure>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
@@ -101,7 +97,7 @@ nginxnginx 1.6.21http://www.test.com/1.txt/hack.php
     </div>
     
         <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">安装前准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">开始正式安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装成功</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">如何运行Apache程序</span></a></li></ol></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.1.</span> <span class="toc-text">nginx 1.6.2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">2.2.</span> <span class="toc-text">nginx 1.x + php 7.x</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">apache</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.1.</span> <span class="toc-text">apache 2.2.x</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">3.2.</span> <span class="toc-text">apache 2.4.0~2.4.29</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">IIS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.1.</span> <span class="toc-text">IIS 6</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">4.2.</span> <span class="toc-text">IIS 7.5</span></a></li></ol></li></ol>
         </div>
     
 </div>
